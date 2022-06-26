@@ -3,6 +3,7 @@ const { prompt } = require('inquirer');
 const prompts = require('./lib/prompts.js');
 const functions = require('./lib/functions.js');
 const { async } = require('rxjs');
+const { arrayBuffer } = require('stream/consumers');
 
 const db = mysql.createConnection(
     {
@@ -37,14 +38,19 @@ const init = () => {
 };
 
 const prepMenu = async () => {
-    console.log("entering prepMenu")
-    let deptArrayPromise = new Promise(functions.returnDepartmentArray(db));
-    console.log(functions.convertArrayToChoices(await deptArrayPromise));
-    console.log("leaving prepMenu")
+    const arrDept= await functions.returnDepartmentArray(db) 
+    prompts.menu[4].choices=arrDept;
+    const arrRole= await functions.returnRoleArray(db) 
+    prompts.menu[7].choices=arrRole;
+    const arrEmp= await functions.returnEmployeeArray(db) 
+    console.log(arrEmp)
+    arrEmp.unshift({name: "(none)", value: null})
+    prompts.menu[8].choices=arrEmp;
+    console.log(prompts.menu)
 }
 
 const showMenu = async () => {
-    
+    await prepMenu()
     const data = await prompt(prompts.menu);
     if (data.menuSelection != -1) {
         menuHandler(data);
@@ -61,20 +67,12 @@ const menuHandler = (data) => {
         functions.queries(db, menuSelection);
     } else if (menuSelection < 20) {
         console.log(data)
-        //functions.clearScreen();
-        //fill departments
-        //console.log(functions.returnDepartmentArray(db));
-
         //add a department
         if (menuSelection == 10) {functions.insertDepartment(db, data.departmentName)};
         //add a role
         if (menuSelection == 11) {functions.insertRole(db, data.roleTitle, data.roleSalary, data.roleDepartment)};
-                    
-        if (menuSelection == 12) {
-       
-            //fill departments
-            //fill managers
-        };
+        //add an employee            
+        if (menuSelection == 12) {functions.insertEmployee(db, data.employeeFirst_name, data.employeeLast_name, data.employeeRole, data.employeeManager)};
     } else {
         functions.updates(db, menuSelection);
     }
