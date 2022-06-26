@@ -57,6 +57,7 @@ const prepMenu = async () => {
 const showMenu = async () => {
     await prepMenu()
     const data = await prompt(prompts.menu);
+    console.log()
     if (data.menuSelection != -1) {
         menuHandler(data);
         //showMenu();
