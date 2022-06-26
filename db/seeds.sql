@@ -19,10 +19,12 @@ VALUES (1, "Software Engineer L4", 90000,1),
         (9, "Benefits Coordinator", 350000,3);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (4,"Chris", "Okamuro", 7,4),
+VALUES (4,"Chris", "Okamuro", 7,null),
         (1,"Sela", "Okamuro", 4,4),
         (2,"Aiko", "Okamuro", 1,1),
-        (3,"Skoshi", "Okamuro", 2,1);
+        (3,"Skoshi", "Okamuro", 2,1),
+        (5,"Karys", "Okamuro",8,null),
+        (6,"Stella", "Okamuro", 9,5);
         
 
 
