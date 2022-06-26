@@ -38,15 +38,20 @@ const init = () => {
 };
 
 const prepMenu = async () => {
+    //read departments 
     const arrDept= await functions.returnDepartmentArray(db) 
+    //set department list into the choices for department on role question
     prompts.menu[4].choices=arrDept;
+    //read roles
     const arrRole= await functions.returnRoleArray(db) 
+    //set role list into the choices for department on employee question
     prompts.menu[7].choices=arrRole;
+    //read list of employees
     const arrEmp= await functions.returnEmployeeArray(db) 
-    console.log(arrEmp)
+    //add option for no manager
     arrEmp.unshift({name: "(none)", value: null})
+    //set manager list into the choices for department on employee question
     prompts.menu[8].choices=arrEmp;
-    console.log(prompts.menu)
 }
 
 const showMenu = async () => {
