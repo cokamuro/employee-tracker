@@ -88,7 +88,7 @@ const menuHandler = (data) => {
         //delete a role
         if (menuSelection == 31) { functions.deletes(db, menuSelection, data.selectedRole) };
         //delete an employee
-        if (menuSelection == 31) { functions.deletes(db, menuSelection, data.selectedEmployee) };
+        if (menuSelection == 32) { functions.deletes(db, menuSelection, data.selectedEmployee) };
     };
 };
 
